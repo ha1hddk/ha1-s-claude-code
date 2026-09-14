@@ -2,7 +2,8 @@
 
 Plugin [Claude Code](https://claude.com/claude-code) cá nhân: năm skill lo bàn giao
 phiên, điều khiển terminal, thiết kế tính năng, art direction cho UI và biên tập
-văn bản, kèm một MCP server trình duyệt để kiểm chứng bằng mắt.
+văn bản, hai agent chạy cô lập cho hai việc tốn context nhất, kèm một MCP server
+trình duyệt để kiểm chứng bằng mắt.
 
 Plugin cố ý giữ nhỏ. Mỗi skill ở đây đều đã dùng cho việc thật; thứ nào không qua
 được đợt rà soát thì bỏ hẳn.
@@ -16,6 +17,7 @@ Plugin cố ý giữ nhỏ. Mỗi skill ở đây đều đã dùng cho việc t
 | [`brainstorming`](#brainstorming) | Bắt thiết kế trước khi code tính năng mới: hỏi từng câu một, 2–3 phương án kèm đánh đổi, chốt bằng spec được duyệt. |
 | [`design-taste`](#design-taste) | Giữ UI do model dựng khỏi lộ dấu vết máy móc: tìm một mẫu do designer thật làm, rút design DNA về project, rồi đối chiếu bản build bằng screenshot. |
 | [`humanizer`](#humanizer) | Viết lại văn bản nghe giống AI thành giọng người, giữ nguyên nội dung. Vendor từ [blader/humanizer](https://github.com/blader/humanizer). |
+| [`agents/`](#agent) | Hai subagent bọc `design-taste` và `humanizer` để phần việc nặng context chạy ở nơi khác. |
 | `.mcp.json` | Khai báo sẵn [Playwright MCP server](https://github.com/microsoft/playwright-mcp) để skill lái được trình duyệt thật. |
 
 ## Yêu cầu
@@ -150,19 +152,52 @@ Vendor nguyên bản ở version 3.0.0; xem `skills/humanizer/UPSTREAM.md` để
 `npx -y @playwright/mcp@latest`. Nó cấp trình duyệt thật cho vòng kiểm chứng của
 `design-taste`, và task nào cần trình duyệt cũng dùng được.
 
+## Agent
+
+Hai skill có phiên bản subagent ở `agents/`. Lý do là chi phí context. Vòng kiểm
+chứng của `design-taste` chụp ảnh ở ba bề ngang nhân hai theme, còn `humanizer` phải
+đọc trọn 374 dòng `SKILL.md` cộng toàn bộ văn bản gốc rồi mới ra được một bản nháp.
+Chạy cô lập thì những thứ đó nằm lại bên trong agent, phiên gọi chỉ nhận kết quả.
+
+| Agent | Nhận vào | Trả về |
+|---|---|---|
+| `design-taste` | Hướng thiết kế đã chốt: repo có `design/DIRECTION.md`, hoặc người gọi chỉ đích danh mẫu | File đã đổi, kết quả triage của vòng verify, nguồn gốc hướng thiết kế |
+| `humanizer` | Đoạn văn hoặc tên file, kèm mẫu giọng văn nếu có | Văn bản cuối, danh sách pattern đã sửa, chỗ cố ý giữ nguyên |
+
+Cả hai đều đọc `SKILL.md` tương ứng làm nguồn chuẩn thay vì chép lại luật, nên sửa
+skill là agent đổi theo.
+
+Có một giới hạn chung cần biết: subagent không hỏi user được, mà cả hai skill đều có
+bước cần hỏi. Hai file agent xử lý khác nhau vì mức thiệt hại khác nhau.
+
+- `design-taste` gặp trường hợp repo chưa có `design/DIRECTION.md` và người gọi cũng
+  không đưa mẫu thì **dừng và báo lại**, kèm hai ba ứng viên để user chọn. Agent tự
+  chọn hướng thiết kế đúng là cái lỗi mà skill sinh ra để ngăn, và hướng đó sẽ bị ghi
+  vào `DIRECTION.md` cho mọi việc sau kế thừa.
+- `humanizer` gặp câu thiếu dữ kiện thì viết câu đơn giản hơn rồi ghi vào báo cáo là
+  đã thiếu gì, đúng như luật cấm bịa của skill.
+
 ## Phát triển
 
 Skill nằm ở `skills/<tên>/SKILL.md`. Phần YAML front matter gồm `name` và
 `description` chính là thứ Claude Code đem đi so với yêu cầu của user, nên đổi hành
 vi thì phải sửa cả description chứ không riêng phần thân.
 
-Hai điều cần biết khi sửa:
+Agent nằm ở `agents/<tên>.md`, front matter dùng `name`, `description`, và `tools`
+nếu muốn giới hạn công cụ. `humanizer` có giới hạn `tools` vì nó chỉ cần đọc và ghi
+file. `design-taste` cố ý bỏ trống: nó cần Playwright MCP, mà tên các tool đó có
+nhúng tên plugin (`mcp__plugin_ha1-s-claude-code_playwright__*`), liệt kê ra là lần
+sau đổi tên plugin sẽ hỏng ngầm.
+
+Ba điều cần biết khi sửa:
 
 - Nội dung skill bị cache theo phiên. Sửa `SKILL.md` rồi gọi lại skill trong cùng
   phiên thì vẫn chạy bản cũ. Phải mở phiên mới.
 - Marketplace lấy từ GitHub cần push trước. Push xong chạy
   `/plugin marketplace update ha1-s-claude-code`. Marketplace trỏ vào thư mục thì
   đọc thẳng cây làm việc.
+- Sửa luật của `design-taste` hay `humanizer` thì sửa trong `SKILL.md`. File agent
+  chỉ nói cách chạy cô lập và trả kết quả, không chép lại luật.
 
 ## Ghi công
 

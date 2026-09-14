@@ -1,7 +1,7 @@
 {
   "name": "ha1-s-claude-code",
   "version": "0.1.0",
-  "description": "Personal Claude Code harness: handoff (session brief saved to a store, auto-delegated to a Herdr pane when one is available), herdr (terminal multiplexer control + peer-session delegation), brainstorming (design-first for new features), design-taste (art direction lock + screenshot verify loop against AI-default UI), humanizer (strip AI writing tells from prose without inventing detail), plus playwright MCP wiring.",
+  "description": "Personal Claude Code harness: handoff (session brief saved to a store, auto-delegated to a Herdr pane when one is available), herdr (terminal multiplexer control + peer-session delegation), brainstorming (design-first for new features), design-taste (art direction lock + screenshot verify loop against AI-default UI), humanizer (strip AI writing tells from prose without inventing detail), plus isolated subagents for design-taste and humanizer, and playwright MCP wiring.",
   "author": {
     "name": "ha1vd"
   }
