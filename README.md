@@ -1,8 +1,8 @@
 # ha1-s-claude-code
 
-A personal [Claude Code](https://claude.com/claude-code) plugin: four skills that
-cover session handoff, terminal orchestration, feature design, and UI art
-direction — plus a browser MCP server for visual verification.
+A personal [Claude Code](https://claude.com/claude-code) plugin: five skills that
+cover session handoff, terminal orchestration, feature design, UI art direction
+and prose editing — plus a browser MCP server for visual verification.
 
 The plugin is deliberately small. Each skill earned its place by being used on
 real work; anything that did not survive an audit was removed rather than kept
@@ -16,6 +16,7 @@ real work; anything that did not survive an audit was removed rather than kept
 | [`herdr`](#herdr) | Drives Herdr, a terminal workspace manager for AI coding agents: panes, tabs, workspaces, agent lifecycle, and peer-to-peer task delegation. |
 | [`brainstorming`](#brainstorming) | Forces a design pass before code on a new feature: one question at a time, 2–3 approaches with trade-offs, an approved spec. |
 | [`design-taste`](#design-taste) | Keeps generated UI from looking machine-made: locate a designer-made sample, extract its design DNA into the project, then verify the build against it by screenshot. |
+| [`humanizer`](#humanizer) | Rewrites AI-sounding prose so it reads as a person's, without changing what it says. Vendored from [blader/humanizer](https://github.com/blader/humanizer). |
 | `.mcp.json` | Bundles the [Playwright MCP server](https://github.com/microsoft/playwright-mcp) so skills can drive a real browser. |
 
 ## Requirements
@@ -126,6 +127,30 @@ unprompted — Inter and Roboto as the chosen face, purple-to-indigo gradients o
 white, gradient-text heroes, emoji as icons, pure `#000`/`#fff`, untinted greys,
 invented metrics, and the usual generated-copy tells.
 
+### humanizer
+
+Edits prose that reads as machine-written. It works from 25 named tells drawn
+from Wikipedia's ["Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing),
+grouped into staging, rhythm, inflation, formatting, and chat leftovers, and
+ordered by strength: the first five justify an edit on a single sighting, while
+the ones marked *weak alone* need other tells in the same passage first.
+
+Two constraints do the real work. Nothing may be invented — no fact, name,
+number, date, quote or citation may enter the text unless it came from the
+source or the user, so a rewrite cannot buy fluency with detail. And a
+"When not to act" section protects deliberate writing: a watched phrase inside a
+quotation, title or proper name is left alone, as is anything written before
+30 November 2022.
+
+Three output modes: return a draft with remaining tells listed, edit a named
+file in place (prose only — code blocks, commands, paths, YAML and link targets
+are preserved), or return just the final text when another task calls it for a
+commit message or pull request body. Supply a writing sample and it matches that
+voice instead, overriding the pattern list.
+
+Vendored unmodified at version 3.0.0; see `skills/humanizer/UPSTREAM.md` for the
+pinned commit and the update procedure.
+
 ## MCP servers
 
 `.mcp.json` declares one stdio server, `playwright`, run via
@@ -149,8 +174,9 @@ Two things to know when editing:
 
 ## Credits
 
-`brainstorming` is adapted from [obra/superpowers](https://github.com/obra/superpowers)
-by Jesse Vincent (MIT). `design-taste` draws on Anthropic's frontend-design
+`humanizer` is vendored unmodified from [blader/humanizer](https://github.com/blader/humanizer)
+by Siqi Chen (MIT). `brainstorming` is adapted from
+[obra/superpowers](https://github.com/obra/superpowers) by Jesse Vincent (MIT). `design-taste` draws on Anthropic's frontend-design
 skill, [Refactoring UI](https://www.refactoringui.com/), OneRedOak's design
 review workflow, and jiji262's UI guidance — all MIT; the derived reference
 material and its licences are in `skills/design-taste/references/`.
@@ -158,6 +184,6 @@ material and its licences are in `skills/design-taste/references/`.
 ## License
 
 Adapted and vendored material keeps the licence it shipped with, recorded beside
-the file it applies to — `skills/brainstorming/LICENSE` and
-`skills/design-taste/references/*.LICENSE`. The remaining original content has no
+the file it applies to — `skills/humanizer/LICENSE`,
+`skills/brainstorming/LICENSE` and `skills/design-taste/references/*.LICENSE`. The remaining original content has no
 licence declared; add a root `LICENSE` file before treating it as reusable.
