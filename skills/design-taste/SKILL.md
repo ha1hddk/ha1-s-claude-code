@@ -143,7 +143,14 @@ tokens; motion 150–300ms, one orchestrated moment, respect reduced-motion.
 3. Audit against both reference files (contrast AA, focus, hierarchy, density).
 4. Triage [Blocker]/[High]/[Medium]/[Nit]; fix Blocker+High; re-screenshot.
 
-## Quality floor — delegate
+## Quality floor
 
-Run ui-ux-pro-max Pre-Delivery Checklist §1–§3 (contrast, touch ≥44px, CLS,
-keyboard nav). A floor, not the goal.
+Before delivering, clear all four. A floor, not the goal — passing these says
+nothing about whether the design is good.
+
+- **Contrast** — text and UI affordances meet WCAG AA against their real
+  background, in both light and dark.
+- **Touch targets** — anything tappable is ≥44×44px, including icon-only buttons.
+- **Layout stability** — no CLS: images and async blocks reserve their space.
+- **Keyboard** — every interactive element reachable by Tab, focus ring visible,
+  Esc closes overlays, focus returns where it came from.

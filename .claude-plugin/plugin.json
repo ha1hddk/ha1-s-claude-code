@@ -1,7 +1,7 @@
 {
   "name": "ha1vd-harness",
   "version": "0.1.0",
-  "description": "Personal Claude Code harness: brainstorming (design-first for new features), design-taste (art direction lock + screenshot verify loop against AI-default UI), handoff (session-to-session prompt with clipboard), herdr (terminal multiplexer control), plus playwright MCP wiring.",
+  "description": "Personal Claude Code harness: handoff (session brief saved to a store, auto-delegated to a Herdr pane when one is available), herdr (terminal multiplexer control + peer-session delegation), brainstorming (design-first for new features), design-taste (art direction lock + screenshot verify loop against AI-default UI), plus playwright MCP wiring.",
   "author": {
     "name": "ha1vd"
   }

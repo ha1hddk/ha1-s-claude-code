@@ -7,8 +7,8 @@
     {
       "name": "ha1vd-harness",
       "source": "./",
-      "description": "Personal Claude Code harness: brainstorming, design-taste, handoff, herdr + playwright MCP."
+      "description": "Personal Claude Code harness: handoff, herdr, brainstorming, design-taste + playwright MCP."
     }
   ],
-  "description": "Bộ harness cá nhân của ha1vd cho Claude Code."
+  "description": "Bộ harness cá nhân của ha1vd cho Claude Code: bàn giao phiên, điều khiển Herdr, thiết kế trước khi code, và giữ UI không bị AI hoá."
 }
