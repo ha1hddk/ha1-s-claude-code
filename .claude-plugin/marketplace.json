@@ -1,11 +1,11 @@
 {
-  "name": "ha1vd-harness",
+  "name": "ha1-s-claude-code",
   "owner": {
     "name": "ha1vd"
   },
   "plugins": [
     {
-      "name": "ha1vd-harness",
+      "name": "ha1-s-claude-code",
       "source": "./",
       "description": "Personal Claude Code harness: handoff, herdr, brainstorming, design-taste + playwright MCP."
     }

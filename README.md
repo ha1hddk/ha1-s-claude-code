@@ -1,4 +1,4 @@
-# ha1vd-harness
+# ha1-s-claude-code
 
 Personal Claude Code plugin — bộ harness cấp user đã tinh gọn sau đợt audit 07/2026
 (mọi thứ trong đây đều sống sót qua kiểm chứng bằng eval hoặc số lần dùng thật).
@@ -18,19 +18,19 @@ Personal Claude Code plugin — bộ harness cấp user đã tinh gọn sau đ�
 Máy này đang cài marketplace **từ thư mục local**, nên sửa file là thấy ngay:
 
 ```bash
-/plugin marketplace add /home/ha1vd/Workspaces/ha1vd-harness
-/plugin install ha1vd-harness
+/plugin marketplace add /home/ha1vd/Workspaces/ha1-s-claude-code
+/plugin install ha1-s-claude-code
 ```
 
 Máy mới thì lấy từ GitHub:
 
 ```bash
 /plugin marketplace add ha1hddk/ha1-s-claude-code
-/plugin install ha1vd-harness
+/plugin install ha1-s-claude-code
 ```
 
-Hai cách loại trừ nhau — cùng tên marketplace `ha1vd-harness`, chỉ đăng ký được một
-nguồn. Bản GitHub phải `git push` rồi `/plugin marketplace update ha1vd-harness` mới
+Hai cách loại trừ nhau — cùng tên marketplace `ha1-s-claude-code`, chỉ đăng ký được một
+nguồn. Bản GitHub phải `git push` rồi `/plugin marketplace update ha1-s-claude-code` mới
 nhận thay đổi.
 
 ## Binary cần cài ngoài (plugin không kèm)
