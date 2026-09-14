@@ -1,0 +1,14 @@
+{
+  "name": "ha1vd-harness",
+  "owner": {
+    "name": "ha1vd"
+  },
+  "plugins": [
+    {
+      "name": "ha1vd-harness",
+      "source": "./",
+      "description": "Personal Claude Code harness: brainstorming, design-taste, handoff, herdr + playwright MCP."
+    }
+  ],
+  "description": "Bộ harness cá nhân của ha1vd cho Claude Code."
+}
